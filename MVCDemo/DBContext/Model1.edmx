@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MVCDemoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseId" />
+          </Key>
+          <Property Name="CourseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="CourseScreen" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CourseTypeId" Type="int" Nullable="false" />
+          <Property Name="UploadCourse" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ContentName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ContentType" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FileExtension" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CourseType">
+          <Key>
+            <PropertyRef Name="CourseTypeId" />
+          </Key>
+          <Property Name="CourseTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseTypeName" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Course__CourseTy__4BAC3F29">
+          <End Role="CourseType" Type="Self.CourseType" Multiplicity="1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseType">
+              <PropertyRef Name="CourseTypeId" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="CourseTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="uspGetMonthWiseCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="MVCDemoModelStoreContainer">
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CourseType" EntityType="Self.CourseType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Course__CourseTy__4BAC3F29" Association="Self.FK__Course__CourseTy__4BAC3F29">
+            <End Role="CourseType" EntitySet="CourseType" />
+            <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MVCDemoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MVCDemoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CourseTypes" EntityType="MVCDemoModel.CourseType" />
+          <EntitySet Name="Courses" EntityType="MVCDemoModel.Course" />
+          <AssociationSet Name="FK__Course__CourseTy__4BAC3F29" Association="MVCDemoModel.FK__Course__CourseTy__4BAC3F29">
+            <End Role="CourseType" EntitySet="CourseTypes" />
+            <End Role="Course" EntitySet="Courses" />
+          </AssociationSet>
+          <FunctionImport Name="uspGetMonthWiseCount" ReturnType="Collection(MVCDemoModel.uspGetMonthWiseCount_Result)" />
+        </EntityContainer>
+        <EntityType Name="CourseType">
+          <Key>
+            <PropertyRef Name="CourseTypeId" />
+          </Key>
+          <Property Name="CourseTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseTypeName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Courses" Relationship="MVCDemoModel.FK__Course__CourseTy__4BAC3F29" FromRole="CourseType" ToRole="Course" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseId" />
+          </Key>
+          <Property Name="CourseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CourseScreen" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CourseTypeId" Type="Int32" Nullable="false" />
+          <Property Name="UploadCourse" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ContentName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ContentType" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FileExtension" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CourseType" Relationship="MVCDemoModel.FK__Course__CourseTy__4BAC3F29" FromRole="Course" ToRole="CourseType" />
+        </EntityType>
+        <Association Name="FK__Course__CourseTy__4BAC3F29">
+          <End Type="MVCDemoModel.CourseType" Role="CourseType" Multiplicity="1" />
+          <End Type="MVCDemoModel.Course" Role="Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseType">
+              <PropertyRef Name="CourseTypeId" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="CourseTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="uspGetMonthWiseCount_Result">
+          <Property Type="String" Name="CourseName" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="TotalCourse" Nullable="true" />
+          <Property Type="String" Name="CourseTypeName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="NameOFMonth" Nullable="true" MaxLength="3" />
+        </ComplexType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MVCDemoModelStoreContainer" CdmEntityContainer="MVCDemoEntities">
+          <EntitySetMapping Name="CourseTypes">
+            <EntityTypeMapping TypeName="MVCDemoModel.CourseType">
+              <MappingFragment StoreEntitySet="CourseType">
+                <ScalarProperty Name="CourseTypeName" ColumnName="CourseTypeName" />
+                <ScalarProperty Name="CourseTypeId" ColumnName="CourseTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="MVCDemoModel.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="FileExtension" ColumnName="FileExtension" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="ContentName" ColumnName="ContentName" />
+                <ScalarProperty Name="UploadCourse" ColumnName="UploadCourse" />
+                <ScalarProperty Name="CourseTypeId" ColumnName="CourseTypeId" />
+                <ScalarProperty Name="CourseScreen" ColumnName="CourseScreen" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="uspGetMonthWiseCount" FunctionName="MVCDemoModel.Store.uspGetMonthWiseCount">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MVCDemoModel.uspGetMonthWiseCount_Result">
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="TotalCourse" ColumnName="TotalCourse" />
+                <ScalarProperty Name="CourseTypeName" ColumnName="CourseTypeName" />
+                <ScalarProperty Name="NameOFMonth" ColumnName="NameOFMonth" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

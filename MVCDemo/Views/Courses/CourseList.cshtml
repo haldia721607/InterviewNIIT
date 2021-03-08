@@ -1,0 +1,81 @@
+﻿@model List<MVCDemo.Models.CourseListViewModel>
+
+@{
+    ViewBag.Title = "Course List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Course List</h2>
+<div class="form-group">
+    <div class="row">
+        @Html.ActionLink("Add Course", "Create", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Report", "CourseReport", null, new { @class = "btn btn-primary" })
+    </div>
+</div>
+    <table class="table">
+        @if (Model != null)
+        {
+            <tr>
+                <th>
+                    Course Name
+                </th>
+                <th>
+                    Course Screen
+                </th>
+                <th>
+                    Course Type
+                </th>
+                <th>
+                    Download/Launch
+                </th>
+            </tr>
+
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseScreen)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseTypeName)
+                    </td>
+                    <td>
+                        @if (item.FileExtension == ".zip")
+                        {
+                            if (item.HtmlExists == ".html")
+                            {
+                                <a href="@Url.Action("OpenPage", "Courses", new { courseId = item.CourseId })">
+                                    <p>Launch</p>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("DownloadFileFromDb", "Courses", new { courseId = item.CourseId })">
+                                    <p>Launch</p>
+                                </a>
+                            }
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("DownloadFileFromDb", "Courses", new { courseId = item.CourseId })">
+                                <p>Download</p>
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td>
+                    <h3 style="text-align:center">No record found.</h3>
+                </td>
+            </tr>
+
+        }
+
+    </table>

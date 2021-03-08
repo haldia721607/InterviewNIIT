@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MVCDemoModelStoreContainer" CdmEntityContainer="MVCDemoEntities">
+    <EntitySetMapping Name="CourseTypes">
+      <EntityTypeMapping TypeName="MVCDemoModel.CourseType">
+        <MappingFragment StoreEntitySet="CourseType">
+          <ScalarProperty Name="CourseTypeName" ColumnName="CourseTypeName" />
+          <ScalarProperty Name="CourseTypeId" ColumnName="CourseTypeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Courses">
+      <EntityTypeMapping TypeName="MVCDemoModel.Course">
+        <MappingFragment StoreEntitySet="Course">
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="FileExtension" ColumnName="FileExtension" />
+          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+          <ScalarProperty Name="ContentName" ColumnName="ContentName" />
+          <ScalarProperty Name="UploadCourse" ColumnName="UploadCourse" />
+          <ScalarProperty Name="CourseTypeId" ColumnName="CourseTypeId" />
+          <ScalarProperty Name="CourseScreen" ColumnName="CourseScreen" />
+          <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+          <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="uspGetMonthWiseCount" FunctionName="MVCDemoModel.Store.uspGetMonthWiseCount">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="MVCDemoModel.uspGetMonthWiseCount_Result">
+          <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+          <ScalarProperty Name="TotalCourse" ColumnName="TotalCourse" />
+          <ScalarProperty Name="CourseTypeName" ColumnName="CourseTypeName" />
+          <ScalarProperty Name="NameOFMonth" ColumnName="NameOFMonth" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

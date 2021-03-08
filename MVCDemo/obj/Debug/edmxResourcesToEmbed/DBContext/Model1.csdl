@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MVCDemoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="MVCDemoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CourseTypes" EntityType="MVCDemoModel.CourseType" />
+    <EntitySet Name="Courses" EntityType="MVCDemoModel.Course" />
+    <AssociationSet Name="FK__Course__CourseTy__4BAC3F29" Association="MVCDemoModel.FK__Course__CourseTy__4BAC3F29">
+      <End Role="CourseType" EntitySet="CourseTypes" />
+      <End Role="Course" EntitySet="Courses" />
+    </AssociationSet>
+    <FunctionImport Name="uspGetMonthWiseCount" ReturnType="Collection(MVCDemoModel.uspGetMonthWiseCount_Result)" />
+  </EntityContainer>
+  <EntityType Name="CourseType">
+    <Key>
+      <PropertyRef Name="CourseTypeId" />
+    </Key>
+    <Property Name="CourseTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CourseTypeName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Courses" Relationship="MVCDemoModel.FK__Course__CourseTy__4BAC3F29" FromRole="CourseType" ToRole="Course" />
+  </EntityType>
+  <EntityType Name="Course">
+    <Key>
+      <PropertyRef Name="CourseId" />
+    </Key>
+    <Property Name="CourseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CourseName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="CourseScreen" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CourseTypeId" Type="Int32" Nullable="false" />
+    <Property Name="UploadCourse" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+    <Property Name="ContentName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ContentType" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FileExtension" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CourseType" Relationship="MVCDemoModel.FK__Course__CourseTy__4BAC3F29" FromRole="Course" ToRole="CourseType" />
+  </EntityType>
+  <Association Name="FK__Course__CourseTy__4BAC3F29">
+    <End Type="MVCDemoModel.CourseType" Role="CourseType" Multiplicity="1" />
+    <End Type="MVCDemoModel.Course" Role="Course" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseType">
+        <PropertyRef Name="CourseTypeId" />
+      </Principal>
+      <Dependent Role="Course">
+        <PropertyRef Name="CourseTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="uspGetMonthWiseCount_Result">
+    <Property Type="String" Name="CourseName" Nullable="false" MaxLength="200" />
+    <Property Type="Int32" Name="TotalCourse" Nullable="true" />
+    <Property Type="String" Name="CourseTypeName" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="NameOFMonth" Nullable="true" MaxLength="3" />
+  </ComplexType>
+</Schema>
